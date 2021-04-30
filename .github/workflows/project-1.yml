@@ -1,6 +1,9 @@
-name: ci
+name: project-1
 on:
-  push
+  push:
+    paths:
+      - ".github/workflows/project-1.yml"
+      - "project-1/**"
 
 jobs:
   test:
@@ -25,3 +28,7 @@ jobs:
       -
         run: |
           poetry config --list
+
+      -
+        run: |
+          pwd
