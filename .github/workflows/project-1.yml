@@ -34,7 +34,7 @@ jobs:
         id: cache
         uses: actions/cache@v2.1.5
         with:
-          path: .venv
+          path: project-1/.venv
           key: ${{ runner.os }}-project-1-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-project-1-
