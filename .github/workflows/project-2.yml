@@ -1,0 +1,48 @@
+name: project-2
+on:
+  push:
+    paths:
+      - ".github/workflows/project-2.yml"
+      - "project-2/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'project-2'
+
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+
+      -
+        name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      -
+        name: Install Poetry
+        run: |
+          pip install poetry
+          poetry config virtualenvs.in-project true
+
+      -
+        name: Setup cache
+        id: cache-poetry
+        uses: actions/cache@v2.1.5
+        with:
+          path: project-2/.venv
+          key: ${{ runner.os }}-project-2-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-project-2-
+            ${{ runner.os }}-
+
+      -
+        name: Install dependencies
+        if: steps.cache-poetry.outputs.cache-hit != 'true'
+        run: |
+          poetry install
+          ls -la
