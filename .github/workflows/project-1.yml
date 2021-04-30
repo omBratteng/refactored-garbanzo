@@ -31,7 +31,7 @@ jobs:
 
       -
         name: Setup cache
-        id: cache
+        id: cache-poetry
         uses: actions/cache@v2.1.5
         with:
           path: project-1/.venv
@@ -42,6 +42,7 @@ jobs:
 
       -
         name: Install dependencies
+        if: steps.cache-poetry.outputs.cache-hit != 'true'
         run: |
           poetry install
           ls -la
